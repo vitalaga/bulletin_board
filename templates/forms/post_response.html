@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Check post</title>
+{% endblock title %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">{{ post.title }}</h1>
+    <h3 class="lead">{{ post.author }} </h3>
+    <h4 class="lead">Categories:
+        {% for cat in post.category.all %}
+        <li class="list-inline-item">{{ cat }}</li>
+        {% endfor %}
+    </h4>
+    <p>{{post.content|safe}}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_div }}
+        <button type="submit" style="font-size:0.8em;">Send</button>
+    </form>
+
+    <h3 class="lead">Community Feedback:</h3>
+    {% for response in post.response_set.all %}
+    <div>
+        <hr>
+        {{ response.author }}
+        <br>
+        {{ response.text }}
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock content %}

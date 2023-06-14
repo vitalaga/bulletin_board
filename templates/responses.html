@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Main page</title>
+{% endblock title %}
+{% block content %}
+{% for response in responses %}
+<div class="container">
+    <div class="text-start mt-5">
+        <h2>{{ response.post.title }}</h2>
+        <h3 class="lead">{{ response.author.username }}</h3>
+        <p> {{ response.text }}
+        <p class="lead">{{ post.date_created|date:'j F Y' }} <a href="{% url 'response' response.post.id response.id %}">Read-></a></p>
+        <hr>
+    </div>
+</div>
+{% empty %}
+<p style="text-align:center;margin-top:15%;">No unapproved responses</p>
+{% endfor %}
+{% if is_paginated %}
+<div style="text-align:center;">
+    {% if page_obj.has_previous %}
+    <a href="?page=1">First</a>
+    <a href="?page={{ page_obj.previous_page_number}}">&#8920</a>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+    <a>{{ num }}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+    <a href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">&#8921</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock content %}

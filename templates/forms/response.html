@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Responses</title>
+{% endblock title %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">{{ post.title }}</h1>
+    <h4 class="lead">Categories:
+        {% for cat in post.category.all %}
+        <li class="list-inline-item">{{ cat }}</li>
+        {% endfor %}
+    </h4>
+    <p>{{post.content|safe}}</p>
+    {{ post.date_created }}
+    <hr>
+    {{ response.author.username }}
+    <br>
+    {{ response.text }}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Accept</button>
+    </form>
+</div>
+{% endblock content %}

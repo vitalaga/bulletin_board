@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Profile</title>
+{% endblock title %}
+{% block content %}
+<div class = "container" style="text-align:center;">
+  <p>Login: {{user.username|default:"Unknown"}}</p>
+  <p>First name: {{user.first_name|default:"Unknown"}}</p>
+  <p>Last name: {{user.last_name|default:"Unknown"}}</p>
+  <p>E-mail: {{user.email|default:"Unknown"}}</p>
+</div>
+<p style="text-align:center;">
+  <a href="{% url 'profile_edit' user.id %}"><u style="font-size:10px">[Change]</u></a>
+  <a href="{% url 'profile_delete' user.id %}"><u style="font-size:10px">[Delete]</u></a>
+</p>
+{% endblock content %}
